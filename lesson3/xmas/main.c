@@ -1,13 +1,12 @@
 #include <stdio.h>
-
-void xmas_sort(int* array, const int n);
+#include "./xmas_sort.h"
 
 int main() {
 
    int myArr[] = {100, 2, 20, 3, 12, 40, 70, 10};
    int amount = 8;
    xmas_sort(myArr, amount);
-   
+
    return 0;
 }
 

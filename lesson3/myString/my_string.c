@@ -1,13 +1,10 @@
 #include <stdio.h>
-// #include "my_string.h"
-
-int string_cmp(const char *str1, const char *str2);
-unsigned int string_len(const char *str);
-void string_rev(unsigned char *str);
-char *string_chr(const char *str, const char c);
+#include "my_string.h"
 
 int main()
 {
+   void *str = "Alihan";
+   string_rev(str);
 }
 
 char *string_chr(const char *str, const char c)
@@ -22,7 +19,6 @@ char *string_chr(const char *str, const char c)
    return NULL;
 }
 
-//TODO: fix this!
 void string_rev(unsigned char *str)
 {
    int len = 0;
@@ -30,13 +26,19 @@ void string_rev(unsigned char *str)
    {
       ++len;
    }
-   char str2[len];
-   int end = len - 1;
-   for (int begin = 0; begin < len; begin++)
+
+   unsigned char *rev_str[len];
+   int reverse = len - 1;
+   for (int i = 0; i < len; ++i)
    {
-      str[begin] = str2[end];
-      end--;
+      rev_str[i] = &str[reverse];
+      --reverse;
    }
+   for (int i = 0; i < len; ++i)
+   {
+      printf("%c", *rev_str[i]);
+   }
+   printf("\n");
 }
 
 unsigned int string_len(const char *str)
