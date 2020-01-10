@@ -37,7 +37,7 @@ int main()
                printf("Geben Sie Zahl 1 ein: ");
             if (iteration == 2)
                printf("Geben Sie Zahl 2 ein: ");
-            scanf("%s", &eingabe);
+            fscanf(stdin, "%s", eingabe);
             if (strcmp(eingabe, "exit") == 0)
             {
                printf("Rechner wird geschlossen\n");
@@ -49,7 +49,7 @@ int main()
             }
             else
             {
-               printf("Falsche Eingabe!\n");
+               fprintf(stderr, "Falsche Eingabe!\n");
             }
          } while (passed == 0);
 
@@ -65,7 +65,7 @@ int main()
          do
          {
             printf("Geben Sie die Operation ein: ");
-            scanf("%s", &eingabe);
+            fscanf(stdin, "%s", eingabe);
             if (strcmp(eingabe, "exit") == 0)
             {
                printf("Rechner wird geschlossen\n");
@@ -78,7 +78,7 @@ int main()
             }
             else
             {
-               printf("Falsche Eingabe!\n");
+               fprintf(stderr, "Falsche Eingabe!\n");
             }
          } while (valid == 0);
       }
