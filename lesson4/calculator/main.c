@@ -2,6 +2,19 @@
 #include <stdlib.h>
 #include <string.h>
 
+int isNumber(char *str)
+{
+   int isNumber = 1;
+   for (int i = 0; str[i] != '\0'; ++i)
+   {
+      if (str[i] <= 47 || str[i] >= 58)
+      {
+         isNumber = 0;
+      }
+   }
+   return isNumber;
+}
+
 int main()
 {
 
@@ -15,10 +28,35 @@ int main()
       switch (iteration)
       {
       case 0:
+      case 2:
       {
-         printf("Geben Sie Zahl 1 ein: ");
-         scanf("%s", &eingabe);
-         num1 = atoi(eingabe);
+         int passed = 0;
+         do
+         {
+            if (iteration == 0)
+               printf("Geben Sie Zahl 1 ein: ");
+            if (iteration == 2)
+               printf("Geben Sie Zahl 2 ein: ");
+            scanf("%s", &eingabe);
+            if (strcmp(eingabe, "exit") == 0)
+            {
+               printf("Rechner wird geschlossen\n");
+               return 0;
+            }
+            if (isNumber(eingabe) == 1)
+            {
+               passed = 1;
+            }
+            else
+            {
+               printf("Falsche Eingabe!\n");
+            }
+         } while (passed == 0);
+
+         if (iteration == 0)
+            num1 = atoi(eingabe);
+         if (iteration == 2)
+            num2 = atoi(eingabe);
       }
       break;
       case 1:
@@ -30,6 +68,7 @@ int main()
             scanf("%s", &eingabe);
             if (strcmp(eingabe, "exit") == 0)
             {
+               printf("Rechner wird geschlossen\n");
                return 0;
             }
             if (strcmp(eingabe, "+") == 0 || strcmp(eingabe, "-") == 0 || strcmp(eingabe, "*") == 0 || strcmp(eingabe, "/") == 0)
@@ -42,13 +81,6 @@ int main()
                printf("Falsche Eingabe!\n");
             }
          } while (valid == 0);
-      }
-      break;
-      case 2:
-      {
-         printf("Geben Sie Zahl 2 ein: ");
-         scanf("%s", &eingabe);
-         num2 = atoi(eingabe);
       }
       break;
       case 3:
