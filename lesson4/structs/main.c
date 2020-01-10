@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 struct Person
 {
@@ -35,50 +37,101 @@ void printPerson(person p)
    }
 }
 
-char *seperateStringToArray(char *str)
+void createHobbies(char *hobbys[5], char hobbysAsString[15])
 {
-   char *hobbys_array[5] = {NULL};
-   int iterator = 0;
+   char temp[50];
    int head = 0;
-   int hobby_count = 0;
-   char temp[200];
-   while (str[iterator] != '\0')
+   int stored = 0;
+   for (int iterator = 0; hobbysAsString[iterator] != '\0'; ++iterator)
    {
-      if (str[iterator] != ',' && str[iterator + 1] != '\0')
+      if (hobbysAsString[iterator] == 44 || hobbysAsString[iterator + 1] == '\0')
       {
-         temp[head] = str[iterator];
-         ++head;
+         //store the data
+         if (hobbysAsString[iterator + 1] == '\0')
+         {
+            temp[head + 1] = hobbysAsString[iterator];
+            printf("%s\n", temp);
+         }
+         // strcpy(hobbys[stored], temp);
+
+         for (; head >= 0; --head)
+         {
+            temp[head] = '\0';
+         }
+         head = 0;
+         ++stored;
       }
       else
       {
-         hobbys_array[hobby_count] = temp;
-         ++hobby_count;
-         head = 0;
-         temp[2] = '\0';
+         temp[head] = hobbysAsString[iterator];
+         ++head;
       }
-      ++iterator;
    }
-   printf("%s", hobbys_array[1]);
-   return NULL;
 }
 
 int main(void)
 {
-   // FILE *filehandle = fopen("persons_input.txt", "r");
-   // person people_array[100] = {NULL};
-   // char buffer[255];
+   char line[100] = "Samatha;Bullis;34;op,Spielen";
+   char temp[50];
+   int head = 0;
+   int toDo = 1;
+   char firstname[15];
+   char secondname[15];
+   char hobbysAsString[15];
+   int age;
+   for (int iterator = 0; line[iterator] != '\0'; ++iterator)
+   {
+      if (line[iterator] == 59 || line[iterator + 1] == '\0')
+      {
+         //store data set.
+         switch (toDo)
+         {
+         case 1:
+         {
+            strcpy(firstname, temp);
+         }
+         break;
+         case 2:
+         {
+            strcpy(secondname, temp);
+         }
+         break;
+         case 3:
+         {
+            age = atoi(temp);
+         }
+         break;
+         case 4:
+         {
+            // temp[head + 1] = line[iterator];
+            strcpy(hobbysAsString, temp);
+            printf("%s", firstname);
+            printf("%s", secondname);
+            printf("%d", age);
 
-   // while (fgets(buffer, 255, filehandle) != NULL)
-   // {
-   //    printf("%s", buffer);
-   // }
-
-   // fgets(buffer, 255, filehandle);
-   // printf("%s", buffer);
-   // fgets(buffer, 255, filehandle);
-   // printf("%s", buffer);
-   seperateStringToArray("Laufen, XYZ");
-   // person p = createPerson("Test", "Ekiz", 20, );
-   // printPerson(p);
+            printf("%s", hobbysAsString);
+            // char *hobbyArray[5] = {NULL};
+            // createHobbies(hobbyArray, hobbysAsString);
+         }
+         break;
+         }
+         for (; head >= 0; --head)
+         {
+            temp[head] = '\0';
+         }
+         head = 0;
+         if (toDo == 4)
+         {
+            toDo = 1;
+         }
+         else
+            toDo++;
+      }
+      else
+      {
+         temp[head] = line[iterator];
+         ++head;
+      }
+   }
    return 0;
 }
