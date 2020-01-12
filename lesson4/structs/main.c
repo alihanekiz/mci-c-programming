@@ -32,12 +32,27 @@ void printPerson(person p)
    {
       if (p.hobbys[i] != NULL)
       {
-         printf("%s, ", p.hobbys[i]);
+         printf("%s\n", p.hobbys[i]);
+      }
+   }
+   printf("\n\n");
+}
+
+void printIfValid(person p)
+{
+   if (p.age >= 20 && p.age <= 30)
+   {
+      for (int i = 0; i < 5; ++i)
+      {
+         if (p.hobbys[i] != NULL && strcmp(p.hobbys[i], "Tanzen") == 0)
+         {
+            printf("%s\n", p.secondname);
+         }
       }
    }
 }
 
-void createHobbies(char *hobbys[5], char hobbysAsString[15])
+void createHobbies(char *hobbys[], char hobbysAsString[15])
 {
    char temp[50];
    int head = 0;
@@ -47,13 +62,13 @@ void createHobbies(char *hobbys[5], char hobbysAsString[15])
       if (hobbysAsString[iterator] == 44 || hobbysAsString[iterator + 1] == '\0')
       {
          //store the data
+         temp[head] = '\0';
          if (hobbysAsString[iterator + 1] == '\0')
          {
-            temp[head + 1] = hobbysAsString[iterator];
-            printf("%s\n", temp);
+            strncat(temp, &hobbysAsString[iterator], sizeof(temp) - strlen(temp) - 1);
          }
-         // strcpy(hobbys[stored], temp);
-
+         hobbys[stored] = malloc(strlen(temp) + 1);
+         strcpy(hobbys[stored], temp);
          for (; head >= 0; --head)
          {
             temp[head] = '\0';
@@ -67,17 +82,19 @@ void createHobbies(char *hobbys[5], char hobbysAsString[15])
          ++head;
       }
    }
+   for (; stored <= 5; ++stored)
+   {
+      hobbys[stored] = NULL;
+   }
 }
 
-int main(void)
+void prepData(char line[])
 {
-   char line[100] = "Samatha;Bullis;34;op,Spielen";
-   char temp[50];
+   char temp[51];
    int head = 0;
    int toDo = 1;
    char firstname[15];
    char secondname[15];
-   char hobbysAsString[15];
    int age;
    for (int iterator = 0; line[iterator] != '\0'; ++iterator)
    {
@@ -88,12 +105,12 @@ int main(void)
          {
          case 1:
          {
-            strcpy(firstname, temp);
+            strlcpy(firstname, temp, sizeof(firstname));
          }
          break;
          case 2:
          {
-            strcpy(secondname, temp);
+            strlcpy(secondname, temp, sizeof(secondname));
          }
          break;
          case 3:
@@ -103,18 +120,17 @@ int main(void)
          break;
          case 4:
          {
-            // temp[head + 1] = line[iterator];
-            strcpy(hobbysAsString, temp);
-            printf("%s", firstname);
-            printf("%s", secondname);
-            printf("%d", age);
+            strncat(temp, &line[iterator], sizeof(temp) - strlen(temp) - 1);
 
-            printf("%s", hobbysAsString);
-            // char *hobbyArray[5] = {NULL};
-            // createHobbies(hobbyArray, hobbysAsString);
+            char *hobbyArray[5];
+            createHobbies(hobbyArray, temp);
+            person p = createPerson(firstname, secondname, age, hobbyArray);
+            printPerson(p);
+            printIfValid(p);
          }
          break;
          }
+
          for (; head >= 0; --head)
          {
             temp[head] = '\0';
@@ -133,5 +149,26 @@ int main(void)
          ++head;
       }
    }
+}
+
+int main(void)
+{
+   FILE *fp;
+   char *line = NULL;
+   size_t len = 0;
+   ssize_t read;
+
+   fp = fopen("persons_input.txt", "r");
+   if (fp == NULL)
+      exit(EXIT_FAILURE);
+
+   while ((read = getline(&line, &len, fp)) != -1)
+   {
+      prepData(line);
+   }
+
+   fclose(fp);
+   if (line)
+      free(line);
    return 0;
 }
