@@ -7,23 +7,16 @@
    {               \
       int t = *x;  \
       *x = *y;     \
-      *x = t;      \
+      *y = t;      \
    }
 
-#define PRINTINT(x) printf("%d\n", x);
+#define PRINTINT(x) printf("%d", x);
 
-#define TAB "\t"
+#define TAB printf("\t");
 
 #define NEWLINE "\n"
 
-#define FOR(a, b, c, d)         \
-   {                            \
-      e                         \
-   }                            \
-   for (int a = b; a <= c; d++) \
-   {                            \
-      e                         \
-   }
+#define FOR(a, b, c, d) for (int a = b; a <= c; d)
 
 #define QUICK(x, y, z) \
    ;                   \
@@ -38,7 +31,6 @@ int partition(int arr[], int low, int high)
 {
    int pivot = arr[high]; // pivot
    int i = (low - 1);     // Index of smaller element
-   int j;
    FOR(j, low, high - 1, j++)
    {
       // If current element is smaller than or
@@ -75,7 +67,6 @@ void quickSort(int arr[], int low, int high)
 /* Function to print an array */
 void printArray(int arr[], int size)
 {
-   int i;
    FOR(i, 0, size - 1, i++)
    {
       PRINTINT(arr[i]);
@@ -89,8 +80,6 @@ int main()
    int arr[] = {NUMBERS};
    int n = sizeof(arr) / sizeof(arr[0]);
    QUICK(arr, 0, n - 1);
-   NEWLINE;
    printArray(arr, n);
-   NEWLINE;
    return 0;
 }
