@@ -14,7 +14,7 @@
 
 #define TAB printf("\t");
 
-#define NEWLINE "\n"
+#define NEWLINE printf("\n");
 
 #define FOR(a, b, c, d) for (int a = b; a <= c; d)
 
