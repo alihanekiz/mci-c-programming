@@ -1,0 +1,1 @@
+void umrechnen(float eurobetrag, char* waehrung, float kurs);
